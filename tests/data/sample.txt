@@ -1,0 +1,3 @@
+Kafka is a distributed event streaming platform.
+
+Consumers read messages from Kafka topics.
