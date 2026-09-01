@@ -7,6 +7,7 @@ from uuid import uuid4
 
 from app.embeddings.embedding_service import EmbeddingService
 from app.models.chunk import Chunk
+from app.models.retrieval_result import RetrievalResult
 
 embedding_service = EmbeddingService()
 
@@ -65,3 +66,27 @@ class QdrantVectorStore:
             collection_name=self.collection_name,
             points=points,
         )
+
+    def search(
+        self,
+        query_embedding: list[float] | None,
+        limit: int = 3,
+    ) -> list[RetrievalResult]:
+        results = self.client.query_points(
+            collection_name=self.collection_name,
+            query=query_embedding,
+            limit=limit,
+        ).points
+
+        return [
+            RetrievalResult(
+                chunk=Chunk(
+                    content=result.payload["content"],
+                    source=result.payload["source"],
+                    file_type=result.payload["file_type"],
+                    chunk_index=result.payload["chunk_index"],
+                ),
+                score=result.score,
+            )
+            for result in results
+        ]
