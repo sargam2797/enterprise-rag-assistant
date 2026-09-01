@@ -2,3 +2,4 @@ pytest
 black
 langchain-text-splitters
 sentence-transformers
+qdrant-client

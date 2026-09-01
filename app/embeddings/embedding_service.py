@@ -4,6 +4,10 @@ from app.models.chunk import Chunk
 
 
 class EmbeddingService:
+    @property
+    def dimension(self) -> int | None:
+        return self.model.get_embedding_dimension()
+
     def __init__(
         self,
         model_name: str = "sentence-transformers/all-MiniLM-L6-v2",
