@@ -19,8 +19,8 @@ def test_filters_results_below_minimum_score():
     )
 
     results = [
-        RetrievalResult(chunk=chunk1, score=0.82),
-        RetrievalResult(chunk=chunk2, score=0.31),
+        RetrievalResult(chunk=chunk1, retrieval_score=0.82),
+        RetrievalResult(chunk=chunk2, retrieval_score=0.31),
     ]
 
     filtered_results = filter_by_relevance(
@@ -41,7 +41,7 @@ def test_returns_empty_list_when_nothing_is_relevant():
     )
 
     results = [
-        RetrievalResult(chunk=chunk, score=0.22),
+        RetrievalResult(chunk=chunk, retrieval_score=0.22),
     ]
 
     filtered_results = filter_by_relevance(

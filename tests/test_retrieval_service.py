@@ -1,11 +1,13 @@
 from app.embeddings.embedding_service import EmbeddingService
 from app.models.chunk import Chunk
+from app.reranking.reranker import Reranker
 from app.retrieval.retrieval_service import RetrievalService
 from app.vector_store.qdrant_store import QdrantVectorStore
 
 
 def test_retrieves_relevant_chunks(tmp_path):
     embedding_service = EmbeddingService()
+    reranker = Reranker()
 
     vector_store = QdrantVectorStore(
         vector_size=embedding_service.dimension,
@@ -34,6 +36,7 @@ def test_retrieves_relevant_chunks(tmp_path):
     retrieval_service = RetrievalService(
         embedding_service=embedding_service,
         vector_store=vector_store,
+        reranker=reranker,
         min_score=0.50,
     )
 

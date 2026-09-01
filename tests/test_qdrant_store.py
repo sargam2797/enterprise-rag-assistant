@@ -115,4 +115,4 @@ def test_retrieves_semantically_similar_chunk(tmp_path):
 
     assert len(results) == 1
     assert results[0].chunk.content == "Kafka consumers read messages from topics."
-    assert results[0].score == 0.8396311788805287
+    assert results[0].retrieval_score == 0.8396311788805287

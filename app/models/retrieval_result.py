@@ -6,4 +6,5 @@ from app.models.chunk import Chunk
 @dataclass
 class RetrievalResult:
     chunk: Chunk
-    score: float
+    retrieval_score: float
+    reranker_score: float | None = None

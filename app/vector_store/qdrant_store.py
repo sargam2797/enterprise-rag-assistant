@@ -86,7 +86,7 @@ class QdrantVectorStore:
                     file_type=result.payload["file_type"],
                     chunk_index=result.payload["chunk_index"],
                 ),
-                score=result.score,
+                retrieval_score=result.score,
             )
             for result in results
         ]
