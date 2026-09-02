@@ -4,3 +4,5 @@ langchain-text-splitters
 sentence-transformers
 qdrant-client
 ollama
+fastapi
+uvicorn
