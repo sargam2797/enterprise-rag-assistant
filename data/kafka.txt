@@ -1,0 +1,11 @@
+Kafka is an event streaming platform.
+
+Producers publish messages to Kafka topics.
+
+Consumers read messages from Kafka topics.
+
+Consumers can belong to consumer groups. Within a consumer group,
+Kafka distributes topic partitions among the consumers so that each
+partition is processed by only one consumer in that group.
+
+Kafka tracks consumer progress using offsets.
