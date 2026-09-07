@@ -1,10 +1,19 @@
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI, Depends
 
-from app.core.dependencies import get_rag_service
+from app.core.dependencies import create_rag_service, get_rag_service
 
 from pydantic import BaseModel
 
 from app.services.rag_service import RAGService
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    app.state.rag_service = create_rag_service()
+    yield
+
 
 app = FastAPI(
     title="Enterprise RAG Assistant",
