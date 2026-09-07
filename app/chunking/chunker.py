@@ -18,7 +18,9 @@ def chunk_document(
         raise InvalidChunkConfigurationError("chunk_overlap cannot be negative")
 
     if chunk_overlap >= chunk_size:
-        raise InvalidChunkConfigurationError("chunk_overlap must be smaller than chunk_size")
+        raise InvalidChunkConfigurationError(
+            "chunk_overlap must be smaller than chunk_size"
+        )
 
     text_splitter = RecursiveCharacterTextSplitter(
         chunk_size=chunk_size, chunk_overlap=chunk_overlap

@@ -2,7 +2,10 @@ from pathlib import Path
 
 import pytest
 
-from app.exceptions.exceptions import DocumentNotFoundError, UnsupportedDocumentTypeError
+from app.exceptions.exceptions import (
+    DocumentNotFoundError,
+    UnsupportedDocumentTypeError,
+)
 from app.ingestion.loader import load_document
 
 

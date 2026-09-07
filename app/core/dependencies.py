@@ -6,13 +6,14 @@ from app.reranking.reranker import Reranker
 from app.retrieval.retrieval_service import RetrievalService
 from app.services.rag_service import RAGService
 from app.vector_store.qdrant_store import QdrantVectorStore
+from app.core.config import settings
 
 embedding_service = EmbeddingService()
 
 vector_store = QdrantVectorStore(
     vector_size=embedding_service.dimension,
-    path="qdrant_data",
-    collection_name="enterprise_documents",
+    path=settings.qdrant_path,
+    collection_name=settings.qdrant_collection,
 )
 
 reranker = Reranker()

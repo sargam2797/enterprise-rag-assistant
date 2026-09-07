@@ -1,6 +1,9 @@
 from pathlib import Path
 
-from app.exceptions.exceptions import DocumentNotFoundError, UnsupportedDocumentTypeError
+from app.exceptions.exceptions import (
+    DocumentNotFoundError,
+    UnsupportedDocumentTypeError,
+)
 from app.models.document import Document
 
 SUPPORTED_EXTENSIONS = {".txt", ".md"}
@@ -13,14 +16,10 @@ def load_document(file_path: str) -> Document:
     path = Path(file_path)
 
     if not path.exists():
-        raise DocumentNotFoundError(
-            f"Document not found: {file_path}"
-        )
+        raise DocumentNotFoundError(f"Document not found: {file_path}")
 
     if path.suffix not in SUPPORTED_EXTENSIONS:
-        raise UnsupportedDocumentTypeError(
-            f"Unsupported file type: {path.suffix}"
-        )
+        raise UnsupportedDocumentTypeError(f"Unsupported file type: {path.suffix}")
 
     content = path.read_text(encoding="utf-8")
 

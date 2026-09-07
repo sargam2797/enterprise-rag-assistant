@@ -1,0 +1,20 @@
+from pydantic_settings import BaseSettings, SettingsConfigDict
+
+
+class Settings(BaseSettings):
+    embedding_model: str = "sentence-transformers/all-MiniLM-L6-v2"
+    reranker_model: str = "cross-encoder/ms-marco-MiniLM-L-6-v2"
+    llm_model: str = "qwen3:4b"
+
+    qdrant_path: str = "qdrant_data"
+    qdrant_collection: str = "enterprise_documents"
+
+    retrieval_min_score: float = 0.30
+
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        env_file_encoding="utf-8",
+    )
+
+
+settings = Settings()
