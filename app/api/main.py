@@ -2,6 +2,8 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, Depends
 
+from app.api.schemas.ingestion import IngestRequest
+from app.api.schemas.query import AskRequest
 from app.core.dependencies import create_rag_service, get_rag_service
 
 from pydantic import BaseModel
@@ -19,14 +21,6 @@ app = FastAPI(
     title="Enterprise RAG Assistant",
     version="1.0.0",
 )
-
-
-class IngestRequest(BaseModel):
-    file_path: str
-
-
-class AskRequest(BaseModel):
-    question: str
 
 
 @app.get("/health")
