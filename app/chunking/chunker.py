@@ -1,5 +1,6 @@
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
+from app.exceptions.exceptions import InvalidChunkConfigurationError
 from app.models.chunk import Chunk
 from app.models.document import Document
 
@@ -11,13 +12,13 @@ def chunk_document(
 ) -> list[Chunk]:
 
     if chunk_size <= 0:
-        raise ValueError("chunk_size must be greater than 0")
+        raise InvalidChunkConfigurationError("chunk_size must be greater than 0")
 
     if chunk_overlap < 0:
-        raise ValueError("chunk_overlap cannot be negative")
+        raise InvalidChunkConfigurationError("chunk_overlap cannot be negative")
 
     if chunk_overlap >= chunk_size:
-        raise ValueError("chunk_overlap must be smaller than chunk_size")
+        raise InvalidChunkConfigurationError("chunk_overlap must be smaller than chunk_size")
 
     text_splitter = RecursiveCharacterTextSplitter(
         chunk_size=chunk_size, chunk_overlap=chunk_overlap

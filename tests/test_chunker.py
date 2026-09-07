@@ -1,6 +1,7 @@
 import pytest
 
 from app.chunking.chunker import chunk_document
+from app.exceptions.exceptions import InvalidChunkConfigurationError
 from app.models.document import Document
 
 
@@ -50,7 +51,7 @@ def test_raises_error_when_chunk_size_is_zero():
         file_type=".txt",
     )
 
-    with pytest.raises(ValueError):
+    with pytest.raises(InvalidChunkConfigurationError):
         chunk_document(document, chunk_size=0)
 
 
@@ -61,7 +62,7 @@ def test_raises_error_when_overlap_is_greater_than_chunk_size():
         file_type=".txt",
     )
 
-    with pytest.raises(ValueError):
+    with pytest.raises(InvalidChunkConfigurationError):
         chunk_document(
             document,
             chunk_size=5,
