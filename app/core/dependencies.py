@@ -3,6 +3,7 @@ from fastapi import Request
 from app.embeddings.embedding_service import EmbeddingService
 from app.generation.generation_service import GenerationService
 from app.ingestion.ingestion_service import IngestionService
+from app.lexical_search.bm25_store import BM25Store
 from app.llm.ollama_client import OllamaClient
 from app.reranking.reranker import Reranker
 from app.retrieval.retrieval_service import RetrievalService
@@ -13,6 +14,7 @@ from app.core.config import settings
 
 def create_rag_service() -> RAGService:
     embedding_service = EmbeddingService(model_name=settings.embedding_model)
+    bm25_store = BM25Store()
 
     vector_store = QdrantVectorStore(
         vector_size=embedding_service.dimension,
@@ -32,6 +34,7 @@ def create_rag_service() -> RAGService:
     ingestion_service = IngestionService(
         embedding_service=embedding_service,
         vector_store=vector_store,
+        bm25_store=bm25_store,
     )
 
     llm_client = OllamaClient(model=settings.llm_model)

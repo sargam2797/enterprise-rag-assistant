@@ -1,5 +1,7 @@
 from app.embeddings.embedding_service import EmbeddingService
 from app.ingestion.ingestion_service import IngestionService
+from app.lexical_search.bm25_store import BM25Store
+from app.lexical_search.bm25_store import BM25Store
 from app.vector_store.qdrant_store import QdrantVectorStore
 
 
@@ -13,6 +15,7 @@ def test_ingests_document_into_qdrant(tmp_path):
     )
 
     embedding_service = EmbeddingService()
+    bm25_store = BM25Store()
 
     vector_store = QdrantVectorStore(
         vector_size=embedding_service.dimension,
@@ -23,6 +26,7 @@ def test_ingests_document_into_qdrant(tmp_path):
     ingestion_service = IngestionService(
         embedding_service=embedding_service,
         vector_store=vector_store,
+        bm25_store=bm25_store,
     )
 
     chunk_count = ingestion_service.ingest(

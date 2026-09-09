@@ -1,7 +1,9 @@
 from app.embeddings.embedding_service import EmbeddingService
+from app.lexical_search.bm25_store import BM25Store
 from app.models.retrieval_result import RetrievalResult
 from app.reranking.reranker import Reranker
-from app.retrieval.relevance_filter import filter_by_relevance
+from app.retrieval.reciprocal_rank_fusion import reciprocal_rank_fusion
+from app.retrieval.relevance_filter import filter_by_reranker_score
 from app.vector_store.qdrant_store import QdrantVectorStore
 
 
@@ -10,13 +12,15 @@ class RetrievalService:
         self,
         embedding_service: EmbeddingService,
         vector_store: QdrantVectorStore,
+        bm25_store: BM25Store,
         reranker: Reranker,
-        min_score: float = 0.60,
+        min_reranker_score: float,
     ):
         self.embedding_service = embedding_service
         self.vector_store = vector_store
+        self.bm25_store = bm25_store
         self.reranker = reranker
-        self.min_score = min_score
+        self.min_reranker_score = min_reranker_score
 
     def retrieve(
         self,
@@ -30,12 +34,19 @@ class RetrievalService:
             limit=limit,
         )
 
-        relevant_results = filter_by_relevance(
-            results=results,
-            min_score=self.min_score,
+        bm25_results = self.bm25_store.search(
+            query=question,
+            limit=limit,
         )
 
-        return self.reranker.rerank(
+        fused_results = reciprocal_rank_fusion([results, bm25_results])
+
+        reranked_results = self.reranker.rerank(
             question=question,
-            results=relevant_results,
+            results=fused_results,
+        )
+
+        return filter_by_reranker_score(
+            results=reranked_results,
+            min_score=self.min_reranker_score,
         )

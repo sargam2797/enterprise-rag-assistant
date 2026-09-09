@@ -1,6 +1,7 @@
 from app.chunking.chunker import chunk_document
 from app.embeddings.embedding_service import EmbeddingService
 from app.ingestion.loader import load_document
+from app.lexical_search.bm25_store import BM25Store
 from app.vector_store.qdrant_store import QdrantVectorStore
 
 
@@ -9,9 +10,11 @@ class IngestionService:
         self,
         embedding_service: EmbeddingService,
         vector_store: QdrantVectorStore,
+        bm25_store: BM25Store,
     ):
         self.embedding_service = embedding_service
         self.vector_store = vector_store
+        self.bm25_store = bm25_store
 
     def ingest(
         self,
@@ -34,4 +37,5 @@ class IngestionService:
             embeddings=embeddings,
         )
 
+        self.bm25_store.add_chunks(chunks=chunks)
         return len(chunks)

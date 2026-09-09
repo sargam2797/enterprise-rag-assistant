@@ -28,4 +28,11 @@ class Reranker:
             reverse=True,
         )
 
-        return [result for result, _ in ranked_results]
+        return [
+            RetrievalResult(
+                chunk=result.chunk,
+                retrieval_score=result.retrieval_score,
+                reranker_score=float(score),
+            )
+            for result, score in ranked_results
+        ]

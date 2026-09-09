@@ -6,3 +6,4 @@ qdrant-client
 ollama
 fastapi
 uvicorn
+rank-bm25
