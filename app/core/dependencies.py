@@ -27,8 +27,9 @@ def create_rag_service() -> RAGService:
     retrieval_service = RetrievalService(
         embedding_service=embedding_service,
         vector_store=vector_store,
+        bm25_store=bm25_store,
         reranker=reranker,
-        min_score=settings.retrieval_min_score,
+        min_reranker_score=settings.reranker_min_score,
     )
 
     ingestion_service = IngestionService(

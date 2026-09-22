@@ -9,7 +9,7 @@ class Settings(BaseSettings):
     qdrant_path: str = "qdrant_data"
     qdrant_collection: str = "enterprise_documents"
 
-    retrieval_min_score: float = 0.30
+    reranker_min_score: float = 0.0
 
     model_config = SettingsConfigDict(
         env_file=".env",
