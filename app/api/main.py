@@ -8,11 +8,13 @@ from app.core.dependencies import create_rag_service, get_rag_service
 
 from pydantic import BaseModel
 
+from app.core.logging_config import configure_logging
 from app.services.rag_service import RAGService
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    configure_logging()
     app.state.rag_service = create_rag_service()
     yield
 
