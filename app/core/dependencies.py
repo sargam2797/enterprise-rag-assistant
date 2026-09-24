@@ -38,7 +38,9 @@ def create_rag_service() -> RAGService:
         bm25_store=bm25_store,
     )
 
-    llm_client = OllamaClient(model=settings.llm_model)
+    llm_client = OllamaClient(
+        model=settings.llm_model, base_url=settings.ollama_base_url
+    )
 
     generation_service = GenerationService(
         retrieval_service=retrieval_service,

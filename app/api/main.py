@@ -21,7 +21,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(
     title="Enterprise RAG Assistant",
-    version="1.0.0",
+    lifespan=lifespan,
 )
 
 

@@ -7,3 +7,4 @@ ollama
 fastapi
 uvicorn
 rank-bm25
+pydantic-settings
